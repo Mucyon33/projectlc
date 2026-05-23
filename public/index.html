@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanchonete - Pedidos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <div id="bannerTopo" class="banner-topo"></div>
+
+        <header class="header">
+            <div class="container">
+                <div class="logo-container">
+                    <div class="logo-circle" id="logoCircle">
+                        <span id="logoTexto">🍔</span>
+                    </div>
+                </div>
+                <div class="loja-info">
+                    <h1 id="nomeLoja">Lanchonete</h1>
+                    <p id="horarioLoja">Segunda a Sexta 18:00 às 23:00</p>
+                    <div class="status-loja" id="statusLoja">
+                        <span class="status-indicator aberto"></span>
+                        <span id="statusTexto">Aberto</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="comunicado" class="comunicado hidden">
+            <div class="container">
+                <strong>📢 COMUNICADO:</strong>
+                <span id="comunicadoTexto"></span>
+            </div>
+        </div>
+
+        <nav class="categorias-nav" id="categoriasNav">
+            <div class="container">
+                <div class="categorias-scroll" id="categoriasScroll"></div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="container">
+                <div id="lojaFechada" class="loja-fechada hidden">
+                    <div class="fechada-content">
+                        <span class="fechada-icon">🔒</span>
+                        <h2>Loja Fechada</h2>
+                        <p>Volte mais tarde!</p>
+                    </div>
+                </div>
+
+                <div id="conteudoPrincipal">
+                    <section id="comunicadoSection" class="section hidden">
+                        <h2>Comunicado</h2>
+                        <div class="comunicado-card">
+                            <p id="comunicadoFull"></p>
+                        </div>
+                    </section>
+
+                    <section id="produtosSection" class="section"></section>
+
+                    <section id="meusPedidosSection" class="section hidden">
+                        <h2>Meus Pedidos</h2>
+                        <div id="meusPedidosAviso" class="comunicado-card hidden"></div>
+                        <div id="meusPedidosLista"></div>
+                    </section>
+
+                    <section id="perfilSection" class="section hidden">
+                        <h2>Perfil</h2>
+                        <div class="perfil-card">
+                            <div class="form-group">
+                                <label>Nome *</label>
+                                <input type="text" id="perfilNome" placeholder="Seu nome">
+                            </div>
+                            <div class="form-group">
+                                <label>Telefone *</label>
+                                <input type="tel" id="perfilTelefone" placeholder="(xx) xxxxx-xxxx">
+                            </div>
+                            <div class="form-group">
+                                <label>Endereço</label>
+                                <input type="text" id="perfilEndereco" placeholder="Rua, número, bairro">
+                            </div>
+                            <div class="perfil-actions">
+                                <button class="btn-primary" id="salvarPerfilBtn">Salvar Perfil</button>
+                            </div>
+                            <p class="perfil-hint">Seu perfil fica salvo neste dispositivo para facilitar próximos pedidos.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <div class="carrinho-flutuante" id="carrinhoFlutuante">
+            <button class="carrinho-btn" id="carrinhoBtn">
+                <span class="carrinho-icon">🛒</span>
+                <span class="carrinho-count" id="carrinhoCount">0</span>
+                <span class="carrinho-total" id="carrinhoTotal">R$ 0,00</span>
+            </button>
+        </div>
+
+        <nav class="nav-inferior">
+            <button class="nav-item active" data-section="cardapio">
+                <span>🍽️</span>
+                <span>Cardápio</span>
+            </button>
+            <button class="nav-item" data-section="pedidos">
+                <span>📋</span>
+                <span>Meus Pedidos</span>
+            </button>
+            <button class="nav-item" data-section="perfil">
+                <span>👤</span>
+                <span>Perfil</span>
+            </button>
+        </nav>
+
+        <div id="carrinhoModal" class="modal hidden">
+            <div class="modal-content carrinho-modal">
+                <div class="modal-header">
+                    <h2>🛒 Seu Carrinho</h2>
+                    <button class="close-btn" id="fecharCarrinho">&times;</button>
+                </div>
+                <div class="modal-body" id="itensCarrinho"></div>
+                <div class="modal-footer">
+                    <div class="total-section">
+                        <span>Total:</span>
+                        <span id="totalCarrinho">R$ 0,00</span>
+                    </div>
+                    <button class="btn-primary" id="finalizarPedidoBtn">Finalizar Pedido</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="produtoModal" class="modal hidden">
+            <div class="modal-content produto-modal-grande">
+                <div class="modal-header">
+                    <button class="close-btn" id="fecharProduto">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="produto-modal-imagem" id="produtoImagem"></div>
+                    <div class="produto-modal-info">
+                        <h2 id="produtoNome"></h2>
+                        <p id="produtoDescricao"></p>
+                        <p class="preco-grande" id="produtoPreco"></p>
+                        
+                        <div id="adicionaisSection" class="adicionais-section"></div>
+                        
+                        <div class="quantidade-control-grande">
+                            <button id="diminuirQtd">-</button>
+                            <span id="quantidade">1</span>
+                            <button id="aumentarQtd">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary-grande" id="adicionarCarrinhoBtn">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="checkoutModal" class="modal hidden">
+            <div class="modal-content checkout-modal">
+                <div class="modal-header">
+                    <h2>📝 Finalizar Pedido</h2>
+                    <button class="close-btn" id="fecharCheckout">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label>Nome *</label>
+                            <input type="text" id="clienteNome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone *</label>
+                            <input type="tel" id="clienteTelefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Pedido *</label>
+                            <div class="tipo-pedido-options">
+                                <label class="tipo-option">
+                                    <input type="radio" name="tipoPedido" value="delivery" checked>
+                                    <span>Delivery</span>
+                                </label>
+                                <label class="tipo-option">
+                                    <input type="radio" name="tipoPedido" value="retirada">
+                                    <span>Retirada</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="enderecoGroup">
+                            <label>Endereço *</label>
+                            <input type="text" id="clienteEndereco" placeholder="Rua, número, bairro">
+                        </div>
+                        <div class="form-group" id="bairroGroup">
+                            <label>Bairro *</label>
+                            <select id="clienteBairro">
+                                <option value="">Selecione um bairro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pagamento *</label>
+                            <div class="pagamento-options" id="pagamentoOptions">
+                                <label class="pagamento-option">
+                                    <input type="radio" name="pagamentoMetodo" value="dinheiro" checked>
+                                    <span>Dinheiro</span>
+                                </label>
+                                <label class="pagamento-option">
+                                    <input type="radio" name="pagamentoMetodo" value="cartao">
+                                    <span>Cartão</span>
+                                </label>
+                                <label class="pagamento-option" id="pagamentoPixOption">
+                                    <input type="radio" name="pagamentoMetodo" value="pix">
+                                    <span>Pix</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group hidden" id="trocoGroup">
+                            <label>Troco para</label>
+                            <input type="number" id="trocoPara" step="0.01" min="0" placeholder="Ex: 50,00">
+                        </div>
+                        <div class="pix-box hidden" id="pixInfo">
+                            <div class="pix-title">Pix</div>
+                            <div class="pix-row">
+                                <div class="pix-key" id="pixChaveTexto"></div>
+                                <button type="button" class="pix-copy" id="btnCopiarPix">Copiar</button>
+                            </div>
+                            <div class="pix-hint" id="pixNomeTexto"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Observações</label>
+                            <textarea id="observacoes" rows="3" placeholder="Ex: Sem cebola, bem passado..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="total-section">
+                        <span>Total:</span>
+                        <span id="checkoutTotal">R$ 0,00</span>
+                    </div>
+                    <button class="btn-success" id="confirmarPedidoBtn">Confirmar Pedido</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="avaliacaoModal" class="modal hidden">
+            <div class="modal-content checkout-modal">
+                <div class="modal-header">
+                    <h2>⭐ Avalie seu último pedido</h2>
+                </div>
+                <div class="modal-body">
+                    <p class="pix-hint">Para continuar, avalie seu último pedido em estrelas.</p>
+                    <div class="avaliacao-group">
+                        <div class="avaliacao-label">Pedido</div>
+                        <div class="stars" data-field="nota_pedido"></div>
+                    </div>
+                    <div class="avaliacao-group">
+                        <div class="avaliacao-label">Serviço</div>
+                        <div class="stars" data-field="nota_servico"></div>
+                    </div>
+                    <div class="avaliacao-group">
+                        <div class="avaliacao-label">Entrega</div>
+                        <div class="stars" data-field="nota_entrega"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-success" id="enviarAvaliacaoBtn">Enviar Avaliação</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="sucessoModal" class="modal hidden">
+            <div class="modal-content sucesso-modal">
+                <div class="sucesso-icon">✅</div>
+                <h2>Pedido Realizado!</h2>
+                <p id="pedidoNumero"></p>
+                <div class="sucesso-actions">
+                    <button class="btn-primary" id="novoPedidoBtn">Novo Pedido</button>
+                    <a id="whatsappBtn" class="btn-whatsapp" href="#" target="_blank">
+                        📱 Enviar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

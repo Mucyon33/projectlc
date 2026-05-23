@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Lanchonete</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div id="app">
+        <div id="loginSection">
+            <div class="login-container">
+                <div class="login-logo">🍔</div>
+                <h1>Admin Lanchonete</h1>
+                <p class="login-subtitle">Gerencie seu estabelecimento</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" value="admin@lanchonete.com" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" id="loginSenha" value="admin123" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn-primary btn-large">Entrar</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="adminSection" class="hidden">
+            <header class="top-header">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <span>🍔</span>
+                    </div>
+                    <div class="header-nav">
+                        <span class="nav-item">Guia Rápido...</span>
+                        <span class="nav-item active" id="deliveryStatusPill">Delivery Fora do Horário</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="date-selector">
+                        <input type="date" class="date-input" id="dateInicio">
+                        <input type="date" class="date-input" id="dateFim">
+                        <button class="btn-small-header" id="btnAtualizarPeriodo">Atualizar</button>
+                    </div>
+                    <button class="btn-header-gray" id="btnBaseClientes">Base de Clientes</button>
+                    <button class="btn-header-blue" id="btnBasePedidos">Base de Pedidos</button>
+                    <button class="btn-header-yellow" id="btnNps">📊 NPS</button>
+                    <button class="header-icon-btn" id="btnNotificacoes">🔔</button>
+                    <button class="header-icon-btn" id="btnPerfil">👤</button>
+                </div>
+            </header>
+
+            <div class="main-container">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <span>🍔</span>
+                    </div>
+                    <ul class="menu">
+                        <li class="menu-item active" data-section="dashboard">
+                            <span class="menu-icon">🏠</span>
+                            <span class="menu-text">Página Inicial</span>
+                        </li>
+                        <li class="menu-item" data-section="pedidos">
+                            <span class="menu-icon">📋</span>
+                            <span class="menu-text">Pedidos</span>
+                        </li>
+                        <li class="menu-item" data-section="produtos">
+                            <span class="menu-icon">🍽️</span>
+                            <span class="menu-text">Produtos</span>
+                        </li>
+                        <li class="menu-item" data-section="fidelidade">
+                            <span class="menu-icon">🎯</span>
+                            <span class="menu-text">Fidelidade</span>
+                        </li>
+                        <li class="menu-item" data-section="financeiro">
+                            <span class="menu-icon">📈</span>
+                            <span class="menu-text">Financeiro</span>
+                        </li>
+                        <li class="menu-item" data-section="categorias">
+                            <span class="menu-icon">📂</span>
+                            <span class="menu-text">Categorias</span>
+                        </li>
+                        <li class="menu-item" data-section="configuracoes">
+                            <span class="menu-icon">⚙️</span>
+                            <span class="menu-text">Configurações</span>
+                        </li>
+                    </ul>
+                </aside>
+
+                <main class="content-area">
+                    <div class="content-top">
+                        <div class="content-left">
+                            <h2 id="adminTitle">Página Inicial</h2>
+                        </div>
+                        <div class="content-right">
+                            <button class="btn-round" id="btnAtalhoPedidos">�</button>
+                            <button class="btn-round" id="btnAtalhoClientes">👥</button>
+                        </div>
+                    </div>
+
+                    <div id="section-dashboard">
+                        <div class="stats-grid">
+                            <div class="stat-card red">
+                                <div class="stat-icon">🔴</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">SELLOS</div>
+                                    <div class="stat-value" id="statSellos">0</div>
+                                </div>
+                                <div class="stat-arrow">⚙️</div>
+                            </div>
+                            <div class="stat-card green">
+                                <div class="stat-icon">🟢</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">PEDIDOS</div>
+                                    <div class="stat-value" id="statPedidos">0</div>
+                                </div>
+                                <div class="stat-arrow">🛒</div>
+                            </div>
+                            <div class="stat-card blue">
+                                <div class="stat-icon">🔵</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">FATURAMENTO</div>
+                                    <div class="stat-value" id="statFaturamento">R$ 0,00</div>
+                                </div>
+                                <div class="stat-arrow">📊</div>
+                            </div>
+                            <div class="stat-card yellow">
+                                <div class="stat-icon">🟡</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">TICKET MÉDIO</div>
+                                    <div class="stat-value" id="statTicket">R$ 0,00</div>
+                                </div>
+                                <div class="stat-arrow">💵</div>
+                            </div>
+                            <div class="stat-card red-border">
+                                <div class="stat-info">
+                                    <div class="stat-label-blue">CARTEILHAS RESGATADAS</div>
+                                    <div class="stat-value" id="statCarteiras">0</div>
+                                </div>
+                                <div class="stat-arrow">📋</div>
+                            </div>
+                            <div class="stat-card yellow-border">
+                                <div class="stat-info">
+                                    <div class="stat-label-red">TAXA DE CONVERSÃO</div>
+                                    <div class="stat-value-green" id="statConversao">0,00%</div>
+                                </div>
+                                <div class="stat-arrow">📈</div>
+                            </div>
+                            <div class="stat-card green-border">
+                                <div class="stat-info">
+                                    <div class="stat-label-yellow">FREQUÊNCIA MÉDIA</div>
+                                    <div class="stat-value" id="statFrequencia">0,0 x por mês</div>
+                                </div>
+                                <div class="stat-arrow">📊</div>
+                            </div>
+                        </div>
+
+                        <div class="cards-grid">
+                            <div class="content-card">
+                                <div class="card-header-red">
+                                    <h3>Faturamento no Delivery</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p id="dashFaturamentoDelivery">Não há registros nesse período.</p>
+                                </div>
+                            </div>
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>Produtos mais vendidos</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>Não há registros nesse período.</p>
+                                </div>
+                            </div>
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>Fidelidade</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>Em breve.</p>
+                                </div>
+                            </div>
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>Melhores clientes</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>Em breve.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="section-pedidos" class="hidden"></div>
+                    <div id="section-clientes" class="hidden"></div>
+                    <div id="section-produtos" class="hidden"></div>
+                    <div id="section-adicionais" class="hidden"></div>
+                    <div id="section-fidelidade" class="hidden"></div>
+                    <div id="section-financeiro" class="hidden"></div>
+                    <div id="section-categorias" class="hidden"></div>
+                    <div id="section-configuracoes" class="hidden"></div>
+                </main>
+            </div>
+
+            <div class="suporte-btn">
+                <button>Suporte...</button>
+            </div>
+
+            <div class="ja-anotei-popup" id="jaAnoteiPopup">
+                <button class="popup-close" id="btnFecharJaAnotei" type="button">&times;</button>
+                <div class="popup-logo">
+                    <span>🍔</span>
+                </div>
+                <h2>JÁ ANOTEI</h2>
+                <p class="popup-version">Versão: 1.0.0</p>
+                <p class="popup-text">"Atendendo automatizado no atendimento aos pedidos"</p>
+                <div class="popup-buttons">
+                    <button class="popup-btn-purple" id="btnAbrirSistemaPedidos">Abrir Sistema Pedidos</button>
+                    <button class="popup-btn-green" id="btnAbrirWhatsapp">Abrir Whatsapp</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal" class="modal hidden">
+            <div class="modal-content" id="modalContent">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Título</h2>
+                    <button class="close-btn" id="closeModal">&times;</button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+                <div class="modal-footer" id="modalFooter"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
